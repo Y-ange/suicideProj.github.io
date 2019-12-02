@@ -1,0 +1,201 @@
+---
+output: html_document
+fontsize: 12pt
+---
+
+```{r,include=FALSE,message=FALSE,echo=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(broom)
+library(plotly)
+library(highcharter)
+library(rworldmap)
+library(gganimate)
+library(transformr)
+library(corrplot)
+library(leaps)
+library(kableExtra)
+knitr::opts_chunk$set(
+ echo = FALSE,
+ fig.width = 5, 
+ fig.height = 3.5,
+ fig.asp = 0.6,
+ out.width = "50%")
+theme_set(theme_bw() + 
+          theme(legend.position = "bottom",
+                legend.title = element_blank(),
+                plot.title = element_text(hjust = 0.5, size = 15),
+                plot.subtitle = element_text(hjust = 0.5, size = 12)))
+
+maindata <- read_csv("maindata.csv")
+```
+
+
+## Global Trend of Suicide Per 100k Populationn over time 
+
+Before 1995, the suicide rate at the global level is increasing, but since then, it keeps decreasing. The peak of the suicide rate among those 30 years was 1995.
+
+```{r,echo=FALSE,fig.align='center'}
+p <- maindata %>%
+  group_by(year) %>%
+  summarize(population = sum(population), 
+            suicides = sum(suicides_no), 
+            suicides_per_100k = (suicides / population) * 100000) %>%
+  ggplot(aes(x = as.factor(year), y = suicides_per_100k, group=1)) + 
+  geom_line(col = "deepskyblue3", size = 1) + 
+  geom_point(col = "deepskyblue3", size = 2) + 
+  labs(title = "Global Suicide Rates",
+       subtitle = "1985 - 2015.",
+       x = "Year", 
+       y = "Suicide Rate") +
+  theme(axis.text.x = element_text(angle = 45))
+
+p + transition_reveal(year)
+```
+
+## Global Trend of Suicide Per 100k Populationn by gender over time 
+
+We found that surprisingly, male has higher rate of suicide than female since 1985. Female suicide rate has a very stable trend throughout the history, while there were dramatic changes for male. As mentioned in the other graph, there is a peak in 1995 for the suiceide rate.
+
+```{r,echo=FALSE,fig.align='center'}
+p <- maindata%>%
+  group_by(year, sex) %>%
+  summarize(suicide_per_100k = (sum(as.numeric(suicides_no)) / sum(as.numeric(population))) * 100000) %>%
+  ggplot(aes(x = year, y = suicide_per_100k, col = factor(sex))) + 
+  geom_line() + 
+  geom_point() + 
+  labs(title = "Trends Over Time, by Sex", 
+       x = "Year", 
+       y = "Suicides per 100k", 
+       color = "Sex") + 
+  scale_x_continuous(breaks = seq(1985, 2015, 5), minor_breaks = F)
+
+p + transition_reveal(year)
+```
+
+## Global Trend of Suicide Per 100k Populationn by age over time 
+
+Suicide rates for the youngest age group nearly constant  and low over time. As the graph shown, elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. For age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years.
+
+
+```{r,echo=FALSE,fig.align='center'}
+p <- maindata%>%
+  group_by(year, age) %>%
+  summarize(suicide_per_100k = (sum(as.numeric(suicides_no)) / sum(as.numeric(population))) * 100000) %>%
+  ggplot(aes(x = year, y = suicide_per_100k, col = factor(age))) + 
+  geom_line() + 
+  geom_point() + 
+  labs(title = "Trends Over Time, by Sex", 
+       x = "Year", 
+       y = "Suicides per 100k", 
+       color = "Sex") + 
+  scale_x_continuous(breaks = seq(1985, 2015, 5), minor_breaks = F)
+
+p + transition_reveal(year)
+```
+
+
+## Suicide Rate by Country GDP
+
+GDP has been viewed as a good measure about the development of a country. However, graph below shows that there are no obvious trend between GDP and suicide rate. Although GDPs across the world have been shifted toward larger direction, such trend persists.
+
+```{r,echo=FALSE,fig.align='center'}
+p <- ggplot(maindata, aes(x = gdp_per_capita, y=suicide_per_100k, size = suicides_no, colour = country)) +
+  geom_point(show.legend = FALSE, alpha = 0.7) +
+  scale_color_viridis_d() +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  labs(x = "GDP per capita", y = "suicides_100k_pop")
+
+p + transition_time(year) + labs(title = "Year: {frame_time}") + shadow_wake(wake_length = 0.1, alpha = FALSE)
+```
+
+
+## Countries with most suicides across the years
+
+We are also interested about the ranking of amount of suicides across the time. Below, we show the changing of the ranking across the time. Since there are too many, we will choose the top 20 countries with most total amount of suicide from 1985 to 2015. Those countries are:
+
+```{r,echo=FALSE,fig.align='center'}
+top_20 <- maindata %>% group_by(country) %>% summarise(count=sum(suicides_no)) %>% arrange(desc(count)) %>% head(n=20)
+kable(top_20)
+```
+
+From graph graph below, we can see that United States, Russian Federation and Japan are the top 3 countries with highest suicides per year. US, Japan, and Germany (number 4 in the rank) have highest GDP rank as well. After researching, Russian Federation has high suicide rate might due to heavy alcoholic use, with an estimated half of all suicides correlated with alcohol abuse.
+
+```{r,echo=FALSE,fig.align='center'}
+suicide_sub<-maindata %>% select(country,year,sex,suicides_no)
+
+n<-unique(suicide_sub$country)
+country<-function(x){
+  suicide2<-suicide_sub %>% filter(country==x)
+  sum(suicide2$suicides_no)
+}
+
+country_total<-sapply(n,function(x) country(x))
+
+top_suicide<- suicide_sub %>% filter(country==c(
+  "Russian Federation",
+  "United States",
+  "Japan",
+  "France",
+  "Ukraine",
+  "Germany",
+  "Republic of Korea",
+  "Brazil",
+  "Poland",
+  "United Kingdom",
+  "Italy",
+  "Mexico",
+  "Canada",
+  "Thailand",
+  "Kazakhstan",
+  "Spain",
+  "Argentina",
+  "Hungary",
+  "Romania",
+  "Australia"))
+
+top_suicide$sex<-as.factor(top_suicide$sex)
+
+sm3<-aggregate(suicides_no~country+year,top_suicide,sum) %>% 
+  group_by(year) %>% 
+  mutate(rank = min_rank(-suicides_no)) %>%
+  ungroup()
+
+static_plot<-ggplot(sm3,aes(rank,group=country,fill=as.factor(country),color=as.factor(country))) +
+ geom_tile(aes(y = suicides_no/2,height = suicides_no, width = 0.9), alpha = 0.8, color = NA) +
+ geom_text(aes(y = 0, label = paste(country, ' ')), vjust = 0.2, hjust = 1) +
+ geom_text(aes(y=suicides_no,label = paste(' ',suicides_no)), hjust=0)+
+ coord_flip(clip = 'off', expand = TRUE) +
+ scale_y_continuous(labels = scales::comma) +
+ scale_x_reverse() +
+ guides(color = FALSE, fill = FALSE) +
+ theme_minimal() +
+ theme(
+ plot.title=element_text(size=25, hjust=0.5, face='bold', colour='grey', vjust=-1),
+ plot.subtitle=element_text(size=18, hjust=0.5, face='italic', color='grey'),
+ plot.caption =element_text(size=8, hjust=0.5, face='italic', color='grey'),
+ axis.ticks.y = element_blank(), 
+ axis.text.y = element_blank(), 
+ plot.margin = margin(1,1,1,4, 'cm')
+ )
+
+plt<-static_plot + transition_states(states = year, transition_length = 4, state_length = 1) + 
+ ease_aes('cubic-in-out') +
+ labs(title = 'Total Suicides per Year : {closest_state}', 
+ subtitle = 'Top 10 Countries',
+ caption = 'Data Source: World Bank Data',
+ x='Countries',y='Total Suicides per year')
+
+final_animation<-animate(plt,100,fps = 20,duration = 30, width = 950, height = 750, renderer = gifski_renderer())
+
+final_animation
+```
+
+
+
+
+
+
+
+
