@@ -1,0 +1,15 @@
+---
+title: "You Are Not Alone"
+fontsize: 8pt
+output:   
+  html_document:
+    toc: true
+    toc_float: true
+---
+<center>
+![](homepage_pic.jpg){width=500px}
+</center>
+
+# National Suicide Prevention Lifeline
+- 24 hours line: (800) 273-8255
+- [Office Websit](https://suicidepreventionlifeline.org/)

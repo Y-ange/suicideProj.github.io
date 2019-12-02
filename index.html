@@ -20,6 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -248,6 +251,63 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -255,6 +315,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -275,10 +345,13 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="general.html">General Trend Analysis</a>
+  <a href="general.html">Trend Graphs</a>
 </li>
 <li>
   <a href="regression.html">Regression Analysis</a>
+</li>
+<li>
+  <a href="resource.html">Resource</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -294,9 +367,12 @@ $(document).ready(function () {
 </div>
 
 
+<center>
+<img src="homepage.jpg" width="500" />
+</center>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Death by suicide is an extremely complex issue that causes pain to hundreds of thousands of people every year around the world. Globally, close to 800,000 people die from suicide every year. This makes it one of the leading causes of death globally which is in the top 15 list. If you are dealing with suicidal thoughts you can receive immediate help by visiting resources such as Suicide.org, or by calling 1-800-SUICIDE in the US. According to the World Health Organization, every year, about 800,000 people die due to suicide. In this project, with a joint dataset from United Nations Development Program, World Bank, Kaggle, and World Health Organization, we examined current trend of Suicide Commitmennts. In particular, we are intrested in:</p>
+<p>Death by suicide is an extremely complex issue that causes pain to hundreds of thousands of people every year around the world. Globally, close to 800,000 people die from suicide every year. This makes it one of the leading causes of death globally which is in the top 15 list. In this project, with a joint dataset from United Nations Development Program, World Bank, Kaggle, and World Health Organization, we examined current trend of Suicide Commitmennts. In particular, we are intrested in:</p>
 <ul>
 <li>What’s the general trend of suicide rate globally across the time.</li>
 <li>Is there any gender difference in suicide rate across the time.</li>
@@ -306,28 +382,27 @@ $(document).ready(function () {
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at <a href="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016">here</a>. This dataset has a range from 1985 to 2016. However, since there are very few data in 2016, we will only keep the range from 1985 to 2015. The raw dataset has a size of 27660 observations and 8 features. Basic features we are interested in include:</p>
-<ul>
-<li><strong>Country</strong></li>
-<li><strong>Year</strong>: Year of the records</li>
-<li><strong>Sex</strong></li>
-<li><strong>Age</strong>: Age groups including “5-14”, “15-24”, “25-34”, “35-54”, “55-74”, and “75+”.</li>
-<li><strong>Suicides_no</strong>: Amount of suicides</li>
-</ul>
-<p>Besides those, we will derive our main interested variable, <strong>Suicides Per 100K</strong> as <strong>Suicides_no</strong> divided by <strong>Population</strong> and mutiplied by 100,000.</p>
+<p>The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at <a href="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016">here</a>. For our purpose, regression analysis will be the main method. Details about the analysis can be found in the section of <strong>Regression Analysis</strong> section.</p>
 </div>
 <div id="findings" class="section level1">
 <h1>Findings</h1>
 <p>There are many interesting finds in our study. We first found that before 1995, the suicide rate at the global level is increasing, but since then, it keeps decreasing. The peak of the suicide rate among those 30 years was 1995. We also found that male has higher rate of suicide than female since 1985. Female suicide rate has a very stable trend throughout the history, while there were dramatic changes for male.For age groups effect, suicide rates for the youngest age group nearly constant and low over time. elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. For age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years. GDP has been viewed as a good measure about the development of a country. However, graph below shows that there are no obvious trend between GDP and suicide rate. Although GDPs across the world have been shifted toward larger direction, such trend persists.</p>
 <p>Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.</p>
 </div>
-<div id="discussion" class="section level1">
-<h1>Discussion</h1>
-<p>A strength of this study is a longitudinal study with a time spin of 30 years, which gives us more chance to explore the justifications and trends behand the data. Meanwhile, there are many limitations future researchers need to be aware of. First of all, there are only few variables that may related with suicide rate. However, there are other factors or latent factors that may reflected by suicide rate such as alcohol use. Secondly, since we have done a global trend analysis, we need data from all over the world. However, this particular data set lacks the suicide information from Asia and Africa. Lastly, the data is not individual-leveled which may intervene our analysis for prediction purpose.</p>
+<div id="contributors" class="section level1">
+<h1>Contributors</h1>
+<ul>
+<li>Yeqing Ji</li>
+<li>Yingxi Ji</li>
+<li>Yiling Yang | <a href="yy3018@columbia.edu">yy3018@columbia.edu</a></li>
+<li>Wurongyan Zhang</li>
+</ul>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -360,6 +435,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

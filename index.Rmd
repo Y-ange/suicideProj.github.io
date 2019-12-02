@@ -1,17 +1,21 @@
 ---
 title: "Prevalence Trend of Suicide Commitments"
 fontsize: 12pt
-output: html_document
+output:   
+  html_document:
+    toc: true
+    toc_float: true
+font-family: "Arial"
 ---
 
-```{r,include=FALSE,message=FALSE,echo=FALSE}
-library(tidyverse)
-maindata <- read_csv("maindata.csv")
-```
+<center>
+
+![](homepage.jpg){width=500px}
+</center>
 
 # Introduction
 
-Death by suicide is an extremely complex issue that causes pain to hundreds of thousands of people every year around the world. Globally, close to 800,000 people die from suicide every year. This makes it one of the leading causes of death globally which is in the top 15 list. If you are dealing with suicidal thoughts you can receive immediate help by visiting resources such as Suicide.org, or by calling 1-800-SUICIDE in the US. According to the World Health Organization, every year, about 800,000 people die due to suicide. In this project, with a joint dataset from United Nations Development Program, World Bank, Kaggle, and World Health Organization, we examined current trend of Suicide Commitmennts. In particular, we are intrested in:
+Death by suicide is an extremely complex issue that causes pain to hundreds of thousands of people every year around the world. Globally, close to 800,000 people die from suicide every year. This makes it one of the leading causes of death globally which is in the top 15 list. In this project, with a joint dataset from United Nations Development Program, World Bank, Kaggle, and World Health Organization, we examined current trend of Suicide Commitmennts. In particular, we are intrested in:
 
 - What's the general trend of suicide rate globally across the time.
 - Is there any gender difference in suicide rate across the time.
@@ -20,15 +24,7 @@ Death by suicide is an extremely complex issue that causes pain to hundreds of t
 
 # Data
 
-The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at [here](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016). This dataset has a range from 1985 to 2016. However, since there are very few data in 2016, we will only keep the range from 1985 to 2015. The raw dataset has a size of `r nrow(maindata)` observations and `r ncol(maindata)` features. Basic features we are interested in include:
-
-- **Country**
-- **Year**: Year of the records
-- **Sex**
-- **Age**: Age groups including "5-14", "15-24",  "25-34", "35-54", "55-74", and "75+".
-- **Suicides_no**: Amount of suicides
-
-Besides those, we will derive our main interested variable, **Suicides Per 100K** as **Suicides_no** divided by **Population** and mutiplied by 100,000.
+The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at [here](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016). For our purpose, regression analysis will be the main method. Details about the analysis can be found in the section of **Regression Analysis** section.
 
 # Findings
 
@@ -36,9 +32,13 @@ There are many interesting finds in our study. We first found that before 1995, 
 
 Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.
 
-# Discussion
+# Contributors
 
-A strength of this study is a longitudinal study with a time spin of 30 years, which gives us more chance to explore the justifications and trends behand the data. Meanwhile, there are many limitations future researchers need to be aware of. First of all, there are only few variables that may related with suicide rate. However, there are other factors or latent factors that may reflected by suicide rate such as alcohol use. Secondly, since we have done a global trend analysis, we need data from all over the world. However, this particular data set lacks the suicide information from Asia and  Africa. Lastly, the data is not individual-leveled which may intervene our analysis for prediction purpose.
+- Yeqing Ji
+- Yingxi Ji
+- Yiling Yang | [yy3018@columbia.edu](yy3018@columbia.edu)
+- Wurongyan Zhang
+
 
 
 

@@ -1,6 +1,9 @@
 ---
 title: "Regression Analysis"
-output: html_document
+output:   
+  html_document:
+    toc: true
+    toc_float: true
 ---
 
 ```{r,include=FALSE,message=FALSE,echo=FALSE}
@@ -17,10 +20,10 @@ library(leaps)
 library(kableExtra)
 knitr::opts_chunk$set(
  echo = FALSE,
- fig.width = 8, 
- fig.height = 6,
+ fig.width = 7, 
+ fig.height = 5,
  fig.asp = 0.6,
- out.width = "80%")
+ out.width = "60%")
 theme_set(theme_bw() + 
           theme(legend.position = "bottom",
                 legend.title = element_blank(),
@@ -30,47 +33,116 @@ theme_set(theme_bw() +
 maindata <- read_csv("maindata.csv")
 ```
 
+# Data
 
-# Inference
+The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at [here](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016). This dataset has a range from 1985 to 2016. However, since there are very few data in 2016, we will only keep the range from 1985 to 2015. 
 
-```{r,echo=FALSE}
-hist(maindata$suicide_per_100k)
-suicide = maindata %>% 
-  mutate(suicide_per_100k = suicide_per_100k+1)
+The raw dataset has a size of `r nrow(maindata)` observations and `r ncol(maindata)` features. Basic features we are interested in include:
+
+- **Country**
+- **Year**: Year of the records
+- **Sex**
+- **Age**: Age groups including "5-14", "15-24",  "25-34", "35-54", "55-74", and "75+".
+- **GDP per capita**
+- **Suicides_no**: Amount of suicides
+
+Besides those, we will derive our main interested variable, **Suicides Per 100K** as **Suicides_no** divided by **Population** and mutiplied by 100,000.
+
+# Exploratory data analysis
+
+# Statistical Analysis
+
+Visualization will be used to examine the global general trend. We will detect the group difference by sex, age, and GDP per capita by doing regression analysis. The interaction terms between age groupand sex are also considered since it's possible that sex can have different suicide trend regarding different age groups. For example women in menopause might have higher suicide rate because of hormonal fluctuation.  Lastly, although not our primary interest, we will fit a regression model to see whether there is a sign of national-specific trend.
+
+Following is the distribution of suicide_100k_pop, we can see that we need to transform it to satisfy the assumptions for linear model. 
+
+```{r,echo=FALSE,fig.align='center'}
+ggplot(aes(x=suicide_per_100k),data = maindata)+
+  geom_density(color="darkblue", fill="lightblue") +
+  ggtitle("Histogram of Estimated Suicides Per 100k") +
+  geom_vline(data=maindata, aes(xintercept=mean(maindata$suicide_per_100k)),
+             linetype="dashed") +
+  ylab("")+
+  xlab("Estimated Suicides Per 100k")
 ```
 
+We used log transformation and changed 0's to 0.01 for further calculations. Following graphs show that after transformation, the distribution has been much more normal than the previous one.
 
-From the distribution plot of suicide_100k_pop, we can see that we need to transform it to satisfy the assumptions for linear model. we used log transformation and changed 0's to 0.01 for further calculations. Following graphs show that after transformation, the distribution has been much more normal than the previous one.
+```{r,echo=FALSE,warning=FALSE,fig.align='center'}
+#suicide = maindata 
+#suicide$suicide_per_100k[which(maindata$suicide_per_100k==0)] =  
+#hist(log(suicide$suicide_per_100k))
 
-```{r,echo=FALSE}
-hist(log(maindata$suicide_per_100k))
+ggplot(aes(x=log(suicide_per_100k)),data = maindata)+
+  geom_density(color="darkblue", fill="lightblue") +
+  ggtitle("Histogram of Estimated Suicides Per 100k") +
+  geom_vline(data=maindata, aes(xintercept=mean(log(suicide_per_100k[which(maindata$suicide_per_100k!=0)]))), linetype="dashed") +
+  ylab("")+
+  xlab("Estimated Suicides Per 100k")
 ```
 
+# Results
+## Visualization
 
-We chose year, sex, age, $sex*age$ and gdp_per_capita as our predictor for predicting log suicide rate. The reason behind the variable chosen process is that sex, age and GDP were our main interest at the beginning. We used $sex*age$ (the interaction term) because we think age and sex might interact together as effect measure of modifier or confounder. For example women in menopause might have higher suicide rate because of hormonal fluctuation. 
+We first plot the estimated total suicides per 100k population acorss all countries throughout the time. As we can see, in recent years, the estimated suicides are decreasing. 
 
+```{r,echo=FALSE,fig.align='center'}
+p <- maindata %>%
+  group_by(year) %>%
+  summarize(population = sum(population), 
+            suicides = sum(suicides_no), 
+            suicides_per_100k = (suicides / population) * 100000) %>%
+  ggplot(aes(x = as.factor(year), y = suicides_per_100k, group=1)) + 
+  geom_line(col = "deepskyblue3", size = 1) + 
+  geom_point(col = "deepskyblue3", size = 2) + 
+  labs(title = "Estimated Suicides Per 100 population",
+       subtitle = "1985 - 2015.",
+       x = "Year", 
+       y = "Estimated Suicides Per 100 population") +
+  theme(axis.text.x = element_text(angle = 45))
+
+p
+```
+
+## Regression
+
+Based on transformation above, the model we are going to fit is:
+
+$$ log(suicide \space per \space 100k) = \beta_0 + \beta_1year + \beta_2sex + \beta_3 age + \beta_4 age*sex + \beta_5 gdp \space per \space capita$$
 ```{r,echo=FALSE}
-maindata_log_y = maindata %>% 
-  mutate(log_suicide =log(suicide_per_100k))
+maindata_log_y = maindata %>% mutate(log_suicide =log(suicide_per_100k))
 maindata_log_y$log_suicide[is.infinite(maindata_log_y$log_suicide)]=0.01
-
 model1=lm(log_suicide~year+sex*age+gdp_per_capita, data = maindata_log_y)
-summary(model1)
+kable(summary(model1)$coefficients)
 ```
 
+Based on the summary, we can see that all our main effects and the interaction term are statistically significant. This indicates that there indeed are group difference by age, gender, and GDP per capita. As we purposed, sex can have different suicide trend regarding different age groups.
 
-Based on the summary, we can see that all our main effects and the interaction term are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.
+The F-statistics is `r summary(model1)$fstatistic[[1]]`. It's obvious that the model is statistically significant under any reasonable critical value. It also has a $R^2$ value of `r summary(model1)$r.squared[[1]]`, which indicateds our chose variables together are able to explain $51.09\%$ of observed variation.
 
-To ensure accuracy, we also examined the assumptions of our model. From plots below, we can see that the residuals are mostly constant but there are 3 clusters(one on the left and two on the right); normality assumption is nearly held; there are about 3 outliers.
+To ensure accuracy, we also examined the assumptions of our model. The Residuals vs Fitted and Scale-Location value plot shows that the model is nearly homoscedastic. Normality assumption is examined by Q-Q plot, which is satisfied. Lastly, the Residuals vs Leverage plot indicates that although there are about 3 potential outliers in our dataset, none of them is close enough to the contour of cook's distance to be considered as influential observations.
 
-```{r,echo=FALSE}
+```{r,echo=FALSE,,fig.align='center'}
 par(mfrow=c(2,2))
 plot(model1)
 ```
 
-Although country and population are not our main interests, we decided to fit a model with those variables in addition to those in previous model. The anova result indicates that at least one of country and population variable is statistically significant. However, due to its limited interpretability, we won't dig too much about this model.
+In addition, we fitted added country and population into previous model. 
+
+
+$$ log(suicide \space per \space 100k) = \beta_0 + \beta_1year + \beta_2sex + \beta_3 age + \beta_4 age*sex + \beta_5 gdp \space per \space capita + \beta_6 Country$$
+
+The anova result indicates that at least one of country and population variable is statistically significant. This means that a more micro studies such as national level suicide trend analysis can be a topic for future topic.
 
 ```{r,echo=FALSE}
-model_try = lm(log_suicide~country+sex+age+population+gdp_per_capita+sex*age, data = maindata_log_y)
+model_try = lm(log_suicide~country+sex+age+gdp_per_capita+sex*age, data = maindata_log_y)
 anova(model_try,model1)
 ```
+
+# Conclusion
+
+Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.
+
+# Discussion
+
+A strength of this study is a longitudinal study with a time spin of 30 years, which gives us more chance to explore the justifications and trends behand the data. Meanwhile, there are many limitations future researchers need to be aware of. First of all, there are only few variables that may related with suicide rate. However, there are other factors or latent factors that may reflected by suicide rate such as alcohol use. Secondly, since we have done a global trend analysis, we need data from all over the world. However, this particular data set lacks the suicide information from Asia and  Africa. Lastly, the data is not individual-leveled which may intervene our analysis for prediction purpose.

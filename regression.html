@@ -20,6 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -248,6 +251,63 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -255,6 +315,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -275,10 +345,13 @@ $(document).ready(function () {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="general.html">General Trend Analysis</a>
+  <a href="general.html">Trend Graphs</a>
 </li>
 <li>
   <a href="regression.html">Regression Analysis</a>
+</li>
+<li>
+  <a href="resource.html">Resource</a>
 </li>
       </ul>
     </div><!--/.nav-collapse -->
@@ -294,61 +367,333 @@ $(document).ready(function () {
 </div>
 
 
-<div id="inference" class="section level1">
-<h1>Inference</h1>
-<p><img src="regression_files/figure-html/unnamed-chunk-2-1.png" width="80%" /></p>
-<p>From the distribution plot of suicide_100k_pop, we can see that we need to transform it to satisfy the assumptions for linear model. we used log transformation and changed 0’s to 0.01 for further calculations. Following graphs show that after transformation, the distribution has been much more normal than the previous one.</p>
-<p><img src="regression_files/figure-html/unnamed-chunk-3-1.png" width="80%" /></p>
-<p>We chose year, sex, age, <span class="math inline">\(sex*age\)</span> and gdp_per_capita as our predictor for predicting log suicide rate. The reason behind the variable chosen process is that sex, age and GDP were our main interest at the beginning. We used <span class="math inline">\(sex*age\)</span> (the interaction term) because we think age and sex might interact together as effect measure of modifier or confounder. For example women in menopause might have higher suicide rate because of hormonal fluctuation.</p>
-<pre><code>## 
-## Call:
-## lm(formula = log_suicide ~ year + sex * age + gdp_per_capita, 
-##     data = maindata_log_y)
-## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -4.7101 -0.6122  0.1882  0.6922  3.2761 
-## 
-## Coefficients:
-##                    Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)       2.041e+01  1.614e+00  12.649  &lt; 2e-16 ***
-## year             -9.692e-03  8.074e-04 -12.005  &lt; 2e-16 ***
-## sexmale           1.097e+00  3.133e-02  35.021  &lt; 2e-16 ***
-## age25-34          8.270e-02  3.133e-02   2.640 0.008300 ** 
-## age35-54          2.699e-01  3.133e-02   8.616  &lt; 2e-16 ***
-## age5-14          -1.625e+00  3.133e-02 -51.873  &lt; 2e-16 ***
-## age55-74          3.531e-01  3.133e-02  11.272  &lt; 2e-16 ***
-## age75+            4.404e-01  3.133e-02  14.057  &lt; 2e-16 ***
-## gdp_per_capita    6.678e-06  3.604e-07  18.530  &lt; 2e-16 ***
-## sexmale:age25-34  2.767e-01  4.431e-02   6.246 4.26e-10 ***
-## sexmale:age35-54  2.562e-01  4.431e-02   5.783 7.42e-09 ***
-## sexmale:age5-14  -8.449e-01  4.431e-02 -19.070  &lt; 2e-16 ***
-## sexmale:age55-74  1.647e-01  4.431e-02   3.718 0.000201 ***
-## sexmale:age75+    2.615e-01  4.431e-02   5.903 3.60e-09 ***
-## ---
-## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-## 
-## Residual standard error: 1.064 on 27646 degrees of freedom
-## Multiple R-squared:  0.5109, Adjusted R-squared:  0.5107 
-## F-statistic:  2221 on 13 and 27646 DF,  p-value: &lt; 2.2e-16</code></pre>
-<p>Based on the summary, we can see that all our main effects and the interaction term are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.</p>
-<p>To ensure accuracy, we also examined the assumptions of our model. From plots below, we can see that the residuals are mostly constant but there are 3 clusters(one on the left and two on the right); normality assumption is nearly held; there are about 3 outliers.</p>
-<p><img src="regression_files/figure-html/unnamed-chunk-5-1.png" width="80%" /></p>
-<p>Although country and population are not our main interests, we decided to fit a model with those variables in addition to those in previous model. The anova result indicates that at least one of country and population variable is statistically significant. However, due to its limited interpretability, we won’t dig too much about this model.</p>
+<div id="data" class="section level1">
+<h1>Data</h1>
+<p>The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at <a href="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016">here</a>. This dataset has a range from 1985 to 2016. However, since there are very few data in 2016, we will only keep the range from 1985 to 2015.</p>
+<p>The raw dataset has a size of 27660 observations and 8 features. Basic features we are interested in include:</p>
+<ul>
+<li><strong>Country</strong></li>
+<li><strong>Year</strong>: Year of the records</li>
+<li><strong>Sex</strong></li>
+<li><strong>Age</strong>: Age groups including “5-14”, “15-24”, “25-34”, “35-54”, “55-74”, and “75+”.</li>
+<li><strong>GDP per capita</strong></li>
+<li><strong>Suicides_no</strong>: Amount of suicides</li>
+</ul>
+<p>Besides those, we will derive our main interested variable, <strong>Suicides Per 100K</strong> as <strong>Suicides_no</strong> divided by <strong>Population</strong> and mutiplied by 100,000.</p>
+</div>
+<div id="exploratory-data-analysis" class="section level1">
+<h1>Exploratory data analysis</h1>
+</div>
+<div id="statistical-analysis" class="section level1">
+<h1>Statistical Analysis</h1>
+<p>Visualization will be used to examine the global general trend. We will detect the group difference by sex, age, and GDP per capita by doing regression analysis. The interaction terms between age groupand sex are also considered since it’s possible that sex can have different suicide trend regarding different age groups. For example women in menopause might have higher suicide rate because of hormonal fluctuation. Lastly, although not our primary interest, we will fit a regression model to see whether there is a sign of national-specific trend.</p>
+<p>Following is the distribution of suicide_100k_pop, we can see that we need to transform it to satisfy the assumptions for linear model.</p>
+<p><img src="regression_files/figure-html/unnamed-chunk-2-1.png" width="60%" style="display: block; margin: auto;" /></p>
+<p>We used log transformation and changed 0’s to 0.01 for further calculations. Following graphs show that after transformation, the distribution has been much more normal than the previous one.</p>
+<p><img src="regression_files/figure-html/unnamed-chunk-3-1.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="results" class="section level1">
+<h1>Results</h1>
+<div id="visualization" class="section level2">
+<h2>Visualization</h2>
+<p>We first plot the estimated total suicides per 100k population acorss all countries throughout the time. As we can see, in recent years, the estimated suicides are decreasing.</p>
+<p><img src="regression_files/figure-html/unnamed-chunk-4-1.png" width="60%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="regression" class="section level2">
+<h2>Regression</h2>
+<p>Based on transformation above, the model we are going to fit is:</p>
+<span class="math display">\[ log(suicide \space per \space 100k) = \beta_0 + \beta_1year + \beta_2sex + \beta_3 age + \beta_4 age*sex + \beta_5 gdp \space per \space capita\]</span>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Estimate
+</th>
+<th style="text-align:right;">
+Std. Error
+</th>
+<th style="text-align:right;">
+t value
+</th>
+<th style="text-align:right;">
+Pr(&gt;|t|)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+20.4128030
+</td>
+<td style="text-align:right;">
+1.6138338
+</td>
+<td style="text-align:right;">
+12.648641
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+year
+</td>
+<td style="text-align:right;">
+-0.0096925
+</td>
+<td style="text-align:right;">
+0.0008074
+</td>
+<td style="text-align:right;">
+-12.004703
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sexmale
+</td>
+<td style="text-align:right;">
+1.0971519
+</td>
+<td style="text-align:right;">
+0.0313288
+</td>
+<td style="text-align:right;">
+35.020566
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age25-34
+</td>
+<td style="text-align:right;">
+0.0827020
+</td>
+<td style="text-align:right;">
+0.0313288
+</td>
+<td style="text-align:right;">
+2.639807
+</td>
+<td style="text-align:right;">
+0.0083000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age35-54
+</td>
+<td style="text-align:right;">
+0.2699173
+</td>
+<td style="text-align:right;">
+0.0313288
+</td>
+<td style="text-align:right;">
+8.615630
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age5-14
+</td>
+<td style="text-align:right;">
+-1.6251063
+</td>
+<td style="text-align:right;">
+0.0313288
+</td>
+<td style="text-align:right;">
+-51.872616
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age55-74
+</td>
+<td style="text-align:right;">
+0.3531358
+</td>
+<td style="text-align:right;">
+0.0313288
+</td>
+<td style="text-align:right;">
+11.271926
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+age75+
+</td>
+<td style="text-align:right;">
+0.4404010
+</td>
+<td style="text-align:right;">
+0.0313288
+</td>
+<td style="text-align:right;">
+14.057388
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+gdp_per_capita
+</td>
+<td style="text-align:right;">
+0.0000067
+</td>
+<td style="text-align:right;">
+0.0000004
+</td>
+<td style="text-align:right;">
+18.529951
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sexmale:age25-34
+</td>
+<td style="text-align:right;">
+0.2767489
+</td>
+<td style="text-align:right;">
+0.0443056
+</td>
+<td style="text-align:right;">
+6.246365
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sexmale:age35-54
+</td>
+<td style="text-align:right;">
+0.2562206
+</td>
+<td style="text-align:right;">
+0.0443056
+</td>
+<td style="text-align:right;">
+5.783030
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sexmale:age5-14
+</td>
+<td style="text-align:right;">
+-0.8449252
+</td>
+<td style="text-align:right;">
+0.0443056
+</td>
+<td style="text-align:right;">
+-19.070394
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sexmale:age55-74
+</td>
+<td style="text-align:right;">
+0.1647189
+</td>
+<td style="text-align:right;">
+0.0443056
+</td>
+<td style="text-align:right;">
+3.717790
+</td>
+<td style="text-align:right;">
+0.0002014
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sexmale:age75+
+</td>
+<td style="text-align:right;">
+0.2615484
+</td>
+<td style="text-align:right;">
+0.0443056
+</td>
+<td style="text-align:right;">
+5.903282
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+</tr>
+</tbody>
+</table>
+<p>Based on the summary, we can see that all our main effects and the interaction term are statistically significant. This indicates that there indeed are group difference by age, gender, and GDP per capita. As we purposed, sex can have different suicide trend regarding different age groups.</p>
+<p>The F-statistics is 2221.3144029. It’s obvious that the model is statistically significant under any reasonable critical value. It also has a <span class="math inline">\(R^2\)</span> value of 0.5108901, which indicateds our chose variables together are able to explain <span class="math inline">\(51.09\%\)</span> of observed variation.</p>
+<p>To ensure accuracy, we also examined the assumptions of our model. The Residuals vs Fitted and Scale-Location value plot shows that the model is nearly homoscedastic. Normality assumption is examined by Q-Q plot, which is satisfied. Lastly, the Residuals vs Leverage plot indicates that although there are about 3 potential outliers in our dataset, none of them is close enough to the contour of cook’s distance to be considered as influential observations.</p>
+<p><img src="regression_files/figure-html/unnamed-chunk-6-1.png" width="60%" style="display: block; margin: auto;" /></p>
+<p>In addition, we fitted added country and population into previous model.</p>
+<p><span class="math display">\[ log(suicide \space per \space 100k) = \beta_0 + \beta_1year + \beta_2sex + \beta_3 age + \beta_4 age*sex + \beta_5 gdp \space per \space capita + \beta_6 Country\]</span></p>
+<p>The anova result indicates that at least one of country and population variable is statistically significant. This means that a more micro studies such as national level suicide trend analysis can be a topic for future topic.</p>
 <pre><code>## Analysis of Variance Table
 ## 
-## Model 1: log_suicide ~ country + sex + age + population + gdp_per_capita + 
-##     sex * age
+## Model 1: log_suicide ~ country + sex + age + gdp_per_capita + sex * age
 ## Model 2: log_suicide ~ year + sex * age + gdp_per_capita
 ##   Res.Df   RSS  Df Sum of Sq      F    Pr(&gt;F)    
-## 1  27547 16188                                   
-## 2  27646 31272 -99    -15085 259.29 &lt; 2.2e-16 ***
+## 1  27548 16220                                   
+## 2  27646 31272 -98    -15052 260.86 &lt; 2.2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level1">
+<h1>Conclusion</h1>
+<p>Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.</p>
+</div>
+<div id="discussion" class="section level1">
+<h1>Discussion</h1>
+<p>A strength of this study is a longitudinal study with a time spin of 30 years, which gives us more chance to explore the justifications and trends behand the data. Meanwhile, there are many limitations future researchers need to be aware of. First of all, there are only few variables that may related with suicide rate. However, there are other factors or latent factors that may reflected by suicide rate such as alcohol use. Secondly, since we have done a global trend analysis, we need data from all over the world. However, this particular data set lacks the suicide information from Asia and Africa. Lastly, the data is not individual-leveled which may intervene our analysis for prediction purpose.</p>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -381,6 +726,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

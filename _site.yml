@@ -3,10 +3,12 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "General Trend Analysis"
+    - text: "Trend Graphs"
       href: general.html
     - text: "Regression Analysis"
       href: regression.html
+    - text: "Resource"
+      href: resource.html
 output:
   html_document:
     theme: darkly
