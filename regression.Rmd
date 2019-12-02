@@ -116,6 +116,7 @@ model1=lm(log_suicide~year+sex*age+gdp_per_capita, data = maindata_log_y)
 kable(summary(model1)$coefficients)
 ```
 
+<br>
 Based on the summary, we can see that all our main effects and the interaction term are statistically significant. This indicates that there indeed are group difference by age, gender, and GDP per capita. As we purposed, sex can have different suicide trend regarding different age groups.
 
 The F-statistics is `r summary(model1)$fstatistic[[1]]`. It's obvious that the model is statistically significant under any reasonable critical value. It also has a $R^2$ value of `r summary(model1)$r.squared[[1]]`, which indicateds our chose variables together are able to explain $51.09\%$ of observed variation.

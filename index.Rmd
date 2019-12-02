@@ -24,20 +24,24 @@ Death by suicide is an extremely complex issue that causes pain to hundreds of t
 
 # Data
 
-The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at [here](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016). For our purpose, regression analysis will be the main method. Details about the analysis can be found in the section of **Regression Analysis** section.
+The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at [here](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016). For our purpose, regression analysis will be the main method. Details about the data and analysis can be found in the section of **Regression Analysis** section.
 
 # Findings
 
-There are many interesting finds in our study. We first found that before 1995, the suicide rate at the global level is increasing, but since then, it keeps decreasing. The peak of the suicide rate among those 30 years was 1995. We also found that male has higher rate of suicide than female since 1985. Female suicide rate has a very stable trend throughout the history, while there were dramatic changes for male.For age groups effect, suicide rates for the youngest age group nearly constant  and low over time. elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. For age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years. GDP has been viewed as a good measure about the development of a country. However, graph below shows that there are no obvious trend between GDP and suicide rate. Although GDPs across the world have been shifted toward larger direction, such trend persists.
+There are many interesting finds in our study. We first found that before 1995, the suicide rate at the global level is increasing, but since then, it keeps decreasing. The peak of the suicide rate among those 30 years was 1995. We also found that male has higher rate of suicide than female since 1985. Female suicide rate has a very stable trend throughout the history, while there were dramatic changes for male. For age groups effect, suicide rates for the youngest age group nearly constant  and low over time. elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. For age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years. GDP has been viewed as a good measure about the development of a country. However, graph below shows that there are no obvious trend between GDP and suicide rate, although GDPs across the world have been shifted toward larger direction. Graphs can be accessed in the **Trend Graphs** sections.
 
-Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.
+Our regression model indicates that all our main effects (i.e. age group, sex, GDP per capita) and the interaction term between age group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph in the **Trend Graphs** sections, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides. Further detailes are in the **Regression Analysis** sections.
+
+# Website Navigation
+- **Trend Graphs**: Graphs of our main interets.
+- **Regression Analysis**: Detailed Analysis Report
+- **Resource**: Resource for Suicide Prevention
 
 # Contributors
-
-- Yeqing Ji
-- Yingxi Ji
-- Yiling Yang | [yy3018@columbia.edu](yy3018@columbia.edu)
-- Wurongyan Zhang
+- Yeqing Ji | [Website](https://yj2580.github.io/)
+- Yingxi Ji | [Website](https://yj2579.github.io/)
+- Yiling Yang | [Website](https://yy3018.github.io/)
+- Wurongyan Zhang | [Website](https://wz2507.github.io/)
 
 
 

@@ -124,9 +124,8 @@ top_20 <- maindata %>% group_by(country) %>% summarise(count=sum(suicides_no)) %
 kable(top_20)
 ```
 
-From graph graph below, we can see that United States, Russian Federation and Japan are the top 3 countries with highest suicides per year. US, Japan, and Germany (number 4 in the rank) have highest GDP rank as well. After researching, Russian Federation has high suicide rate might due to heavy alcoholic use, with an estimated half of all suicides correlated with alcohol abuse.
-
 ```{r,echo=FALSE,fig.align='center'}
+# From graph graph below, we can see that United States, Russian Federation and Japan are the top 3 countries with highest suicides per year. US, Japan, and Germany (number 4 in the rank) have highest GDP rank as well. After researching, Russian Federation has high suicide rate might due to heavy alcoholic use, with an estimated half of all suicides correlated with alcohol abuse.
 
 knitr::opts_chunk$set(
  echo = FALSE,

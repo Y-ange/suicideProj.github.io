@@ -11,4 +11,4 @@ navbar:
       href: resource.html
 output:
   html_document:
-    theme: darkly
+    theme: journal

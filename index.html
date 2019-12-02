@@ -16,7 +16,7 @@
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<link href="site_libs/bootstrap-3.3.5/css/journal.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
@@ -106,33 +106,33 @@ summary {
 <style type="text/css">
 /* padding for bootstrap navbar */
 body {
-  padding-top: 60px;
+  padding-top: 61px;
   padding-bottom: 40px;
 }
 /* offset scroll position for anchor links (for fixed navbar)  */
 .section h1 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h2 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h3 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h4 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h5 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .section h6 {
-  padding-top: 65px;
-  margin-top: -65px;
+  padding-top: 66px;
+  margin-top: -66px;
 }
 .dropdown-submenu {
   position: relative;
@@ -382,20 +382,28 @@ div.tocify {
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at <a href="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016">here</a>. For our purpose, regression analysis will be the main method. Details about the analysis can be found in the section of <strong>Regression Analysis</strong> section.</p>
+<p>The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at <a href="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016">here</a>. For our purpose, regression analysis will be the main method. Details about the data and analysis can be found in the section of <strong>Regression Analysis</strong> section.</p>
 </div>
 <div id="findings" class="section level1">
 <h1>Findings</h1>
-<p>There are many interesting finds in our study. We first found that before 1995, the suicide rate at the global level is increasing, but since then, it keeps decreasing. The peak of the suicide rate among those 30 years was 1995. We also found that male has higher rate of suicide than female since 1985. Female suicide rate has a very stable trend throughout the history, while there were dramatic changes for male.For age groups effect, suicide rates for the youngest age group nearly constant and low over time. elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. For age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years. GDP has been viewed as a good measure about the development of a country. However, graph below shows that there are no obvious trend between GDP and suicide rate. Although GDPs across the world have been shifted toward larger direction, such trend persists.</p>
-<p>Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.</p>
+<p>There are many interesting finds in our study. We first found that before 1995, the suicide rate at the global level is increasing, but since then, it keeps decreasing. The peak of the suicide rate among those 30 years was 1995. We also found that male has higher rate of suicide than female since 1985. Female suicide rate has a very stable trend throughout the history, while there were dramatic changes for male. For age groups effect, suicide rates for the youngest age group nearly constant and low over time. elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. For age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years. GDP has been viewed as a good measure about the development of a country. However, graph below shows that there are no obvious trend between GDP and suicide rate, although GDPs across the world have been shifted toward larger direction. Graphs can be accessed in the <strong>Trend Graphs</strong> sections.</p>
+<p>Our regression model indicates that all our main effects (i.e. age group, sex, GDP per capita) and the interaction term between age group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph in the <strong>Trend Graphs</strong> sections, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides. Further detailes are in the <strong>Regression Analysis</strong> sections.</p>
+</div>
+<div id="website-navigation" class="section level1">
+<h1>Website Navigation</h1>
+<ul>
+<li><strong>Trend Graphs</strong>: Graphs of our main interets.</li>
+<li><strong>Regression Analysis</strong>: Detailed Analysis Report</li>
+<li><strong>Resource</strong>: Resource for Suicide Prevention</li>
+</ul>
 </div>
 <div id="contributors" class="section level1">
 <h1>Contributors</h1>
 <ul>
-<li>Yeqing Ji</li>
-<li>Yingxi Ji</li>
-<li>Yiling Yang | <a href="yy3018@columbia.edu">yy3018@columbia.edu</a></li>
-<li>Wurongyan Zhang</li>
+<li>Yeqing Ji | <a href="https://yj2580.github.io/">Website</a></li>
+<li>Yingxi Ji | <a href="https://yj2579.github.io/">Website</a></li>
+<li>Yiling Yang | <a href="https://yy3018.github.io/">Website</a></li>
+<li>Wurongyan Zhang | <a href="https://wz2507.github.io/">Website</a></li>
 </ul>
 </div>
 
