@@ -48,7 +48,92 @@ The raw dataset has a size of `r nrow(maindata)` observations and `r ncol(mainda
 
 Besides those, we will derive our main interested variable, **Suicides Per 100K** as **Suicides_no** divided by **Population** and mutiplied by 100,000.
 
+
 # Exploratory data analysis
+
+## Country
+
+```{r,echo=FALSE,fig.align='center'}
+country_count <- maindata %>% group_by(year) %>%  summarise(count = n_distinct(country))
+```
+
+There are average `r mean(country_count$count)` countries in the dataset across each year. Graph below shows the distribution. Although there are less countries before 1995, the amount of countries for each year is stable arount 80.
+
+```{r,echo=FALSE,fig.align='center'}
+p <- ggplot(aes(x=as.factor(year),y=count),data=country_count)+
+  geom_bar(stat="identity") +
+  ggtitle("Amount of country in the database") +
+  geom_text(aes(label = count),vjust = -0.25) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  xlab("Year")
+
+p
+```
+
+## Sex
+
+Graph below shows that sex for each year is also evenly distributed.
+
+```{r,echo=FALSE,fig.align='center'}
+sex_count <- maindata %>% group_by(year,sex) %>%  summarise(count = sum(population)/100000)
+
+p <- ggplot(aes(x=as.factor(year),y=count,fill=sex),data=sex_count)+
+  geom_bar(stat="identity") +
+  ggtitle("Gender distribution in the database") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p
+```
+
+## Age group
+
+Although there are some variation between groups, theration between amounts of people in different age groups are consistent across years.
+
+```{r,echo=FALSE,fig.align='center'}
+age_count <- maindata %>% group_by(year,age) %>%  summarise(count = sum(population)/100000)
+
+p <- ggplot(aes(x=as.factor(year),y=count,fill=age),data=age_count)+
+  geom_bar(stat="identity") +
+  ggtitle("Age distribution in the database") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+p
+```
+
+# GDP per capita
+
+The distribution of GDP per capita is skewed to the right. As the year goes on, we can see that the distribution becomes more relatively flater.
+
+```{r,echo=FALSE,fig.align='center'}
+age_count <- maindata %>% group_by(year,age) %>%  summarise(count = sum(population)/100000)
+
+p <- ggplot(data=maindata, aes(x=gdp_per_capita, fill=as.factor(year))) +
+  geom_density()
+p
+```
+
+
+## Suicides Per 100K
+
+As we mentioned above, we can derive our main interested variable, **Suicides Per 100K**, as **Suicides_no** divided by **Population** and mutiplied by 100,000. The trend is shown as below. As we can see, in recent years, the estimated suicides are decreasing. 
+
+```{r,echo=FALSE,fig.align='center'}
+p <- maindata %>%
+  group_by(year) %>%
+  summarize(population = sum(population), 
+            suicides = sum(suicides_no), 
+            suicides_per_100k = (suicides / population) * 100000) %>%
+  ggplot(aes(x = as.factor(year), y = suicides_per_100k, group=1)) + 
+  geom_line(col = "deepskyblue3", size = 1) + 
+  geom_point(col = "deepskyblue3", size = 2) + 
+  labs(title = "Estimated Suicides Per 100 population",
+       subtitle = "1985 - 2015.",
+       x = "Year", 
+       y = "Estimated Suicides Per 100 population") +
+  theme(axis.text.x = element_text(angle = 45))
+
+p
+```
 
 # Statistical Analysis
 
@@ -82,29 +167,6 @@ ggplot(aes(x=log(suicide_per_100k)),data = maindata)+
 ```
 
 # Results
-## Visualization
-
-We first plot the estimated total suicides per 100k population acorss all countries throughout the time. As we can see, in recent years, the estimated suicides are decreasing. 
-
-```{r,echo=FALSE,fig.align='center'}
-p <- maindata %>%
-  group_by(year) %>%
-  summarize(population = sum(population), 
-            suicides = sum(suicides_no), 
-            suicides_per_100k = (suicides / population) * 100000) %>%
-  ggplot(aes(x = as.factor(year), y = suicides_per_100k, group=1)) + 
-  geom_line(col = "deepskyblue3", size = 1) + 
-  geom_point(col = "deepskyblue3", size = 2) + 
-  labs(title = "Estimated Suicides Per 100 population",
-       subtitle = "1985 - 2015.",
-       x = "Year", 
-       y = "Estimated Suicides Per 100 population") +
-  theme(axis.text.x = element_text(angle = 45))
-
-p
-```
-
-## Regression
 
 Based on transformation above, the model we are going to fit is:
 
