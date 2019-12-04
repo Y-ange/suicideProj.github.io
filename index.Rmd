@@ -32,6 +32,10 @@ There are many interesting finds in our study. We first found that before 1995, 
 
 Our regression model indicates that all our main effects (i.e. age group, sex, GDP per capita) and the interaction term between age group and sex are statistically significant. This indicates that there indeed are group differences by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding to different age groups. An interesting finding is that although there is no obvious trend between the amount of suicides and GDP per capita based on the graph in the **Trend Graphs** section, the regression output shows that GDP per capita does have a statistically significant effect on amount of suicides. Further detailed analyses are in the **Regression Analysis** sections.
 
+# Report
+Our report can be found [here](report.html).
+
+
 # Website Navigation
 - **Trend Graphs**: Graphs of our Main Interest
 - **Regression Analysis**: Detailed Analysis Report

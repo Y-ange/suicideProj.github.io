@@ -1,0 +1,12 @@
+---
+title: "report"
+author: "Wurongyan Zhang"
+date: "12/4/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<iframe src="Final_Report_finalversion.pdf" width="100%" height="1000px">

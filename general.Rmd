@@ -79,7 +79,7 @@ p + transition_reveal(year)
 
 ## Global Trend of Suicide Per 100k Population by age over time 
 
-Suicide rates for the youngest age group are nearly constant and low over time. As the graph shown, elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. Age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years.
+Suicide rates for the youngest age group are nearly constant and low over time. As the graph shown, elder groups had higher suicide rate since 1985, and surprisingly such trend has not changed once. Age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years.
 
 
 ```{r,echo=FALSE,fig.align='center'}

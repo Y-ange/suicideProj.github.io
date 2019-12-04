@@ -2,7 +2,7 @@
 title: "data_clean"
 author: "Yiling Yang"
 date: "11/30/2019"
-output: pdf_document
+output: html_document
 ---
 ```{r,eval=FALSE}
 library(tidyverse)
@@ -19,7 +19,7 @@ library(kableExtra)
 ```
 
 ```{r,eval=FALSE}
-maindata <- read_csv("~/Desktop/master 2.csv") 
+maindata <- read_csv("master 2.csv") 
 
 maindata <-  maindata %>% 
   janitor::clean_names() %>%
@@ -40,7 +40,7 @@ maindata$year <- as.integer(maindata$year)
 maindata <- maindata %>% group_by(year,country,sex,age,population,gdp_per_capita) %>% summarise(suicides_no =  sum(suicides_no)) %>%  mutate("suicide_per_100k"=(suicides_no/population)*100000)
 
 
-write.csv(maindata, "maindata.csv",row.names = FALSE)
+# write.csv(maindata, "maindata.csv",row.names = FALSE)
 ```
 
 
