@@ -11,6 +11,8 @@ navbar:
       href: resource.html
     - text: "Interactive Map"
       href: https://yj2580.shinyapps.io/interactivemap/
+    - text: fa-github fa-lg
+      href: https://github.com/suicideProj/suicideProj.github.io.git
 output:
   html_document:
     theme: journal

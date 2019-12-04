@@ -10,9 +10,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
+<meta name="author" content="Wurongyan Zhang" />
 
 
-<title>You Are Not Alone</title>
+<title>proposal</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,9 +21,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -251,63 +249,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -315,16 +256,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -368,37 +299,26 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">You Are Not Alone</h1>
+<h1 class="title toc-ignore">proposal</h1>
+<h4 class="author">Wurongyan Zhang</h4>
+<h4 class="date">12/4/2019</h4>
 
 </div>
 
 
-<br>
-<center>
-<img src="homepage_pic.jpg" width="500" />
-</center>
-<div id="national-suicide-prevention-lifeline" class="section level1">
-<h1>National Suicide Prevention Lifeline</h1>
-<ul>
-<li>24 hours line: (800) 273-8255</li>
-<li><a href="https://suicidepreventionlifeline.org/">Office Website</a></li>
-</ul>
-<center>
-<img src="resourcepic1.jpg" width="500" />
-<center>
+<div id="proposal-prevalence-trend-and-determinants-of-suicide-rates" class="section level1">
+<h1>Proposal: Prevalence trend and Determinants of Suicide Rates</h1>
+<p>Yingxi Ji (yj2579) Yeqing Ji (yj2580)<br />
+Wurongyan Zhang (wz2507) Yiling Yang (yy3018)</p>
+<p>According to the World Health Organization, every year, about 800,000 people die due to suicide. In this project, we are wondering the trend of suicide rate across years. The anticipated dataset is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization, which can be access at <a href="https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016" class="uri">https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016</a>. The dataset contains suicide rate and relative dataset from 1985 to 2016. In particular, we are interested in: Examining the trend or changes in suicide rates across years Examining the difference in suicide rates across gender, region, and generations and the trend of such difference. Planned analyses begin with data cleaning and EDA. This step includes visualization, possibly interactive, by using graphs such as bar graphs, correlation matrix and heat map. Proportional hypothesis test and regression are followed. An interactive map might be considered. The intended outputs include: 1) A web page containing report and interactive tools, and 2) A video demonstration of webpage and report. Expected coding challenges are mostly about how to use website to show the trend across many factors such as time or region.</p>
 </div>
-<div id="nyc-health-suicide-prevention" class="section level1">
-<h1>NYC Health Suicide Prevention</h1>
-<ul>
-<li>1-888-NYC-WELL (1-888-692-9355)</li>
-<li><a href="https://www1.nyc.gov/site/doh/health/health-topics/suicide-prevention.page">Office Website</a></li>
-</ul>
+<div id="the-planned-timeline" class="section level1">
+<h1>The planned timeline</h1>
+<p>Nov 20: Finish EDA and interested questions Dec 1: Build website Dec 4: Make video</p>
 </div>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -431,32 +351,6 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

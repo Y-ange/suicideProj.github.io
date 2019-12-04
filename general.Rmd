@@ -112,7 +112,7 @@ p <- ggplot(suicide_country, aes(x = gdp_per_capita, y=suicide_100k_pop, colour 
   scale_color_viridis_d() +
   scale_size(range = c(2, 12)) +
   scale_x_log10() +
-  labs(x = "GDP per capita", y = "suicides_100k_pop")
+  labs(x = "GDP per capita", y = "suicides per 100k")
 
 p + transition_time(as.integer(year))+ labs(title = "Year: {frame_time}") + shadow_wake(wake_length = 0.1, alpha = FALSE)
 ```
