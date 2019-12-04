@@ -35,9 +35,9 @@ maindata <- read_csv("maindata.csv")
 ```
 
 
-## Global Trend of Suicide Per 100k Populationn over time 
+## Global Trend of Suicide Per 100k Population over time 
 
-We first plot the estimated total suicides per 100k population acorss all countries throughout the time. As we can see, in recent years, the estimated suicides are decreasing. 
+We first plot the estimated total suicides per 100k population across all countries throughout the time. As we can see, in recent years, the estimated suicides are decreasing. 
 
 ```{r,echo=FALSE,fig.align='center'}
 p <- maindata %>%
@@ -51,15 +51,15 @@ p <- maindata %>%
   labs(title = "Estimated Suicides Per 100 population",
        subtitle = "1985 - 2015.",
        x = "Year", 
-       y = "Estimated Suicides Per 100 population") +
+       y = "Estimated Suicides Per 100k population") +
   theme(axis.text.x = element_text(angle = 45))
 
 p + transition_reveal(year)
 ```
 
-## Global Trend of Suicide Per 100k Populationn by gender over time 
+## Global Trend of Suicide Per 100k Population by gender over time 
 
-We found that surprisingly, male has higher rate of suicide than female since 1985. Female suicide rate has a very stable trend throughout the history, while there were dramatic changes for male. As mentioned in the other graph, there is a peak in 1995 for the suiceide rate.
+We found that surprisingly, male has higher rate of suicide than female since 1985. Female suicide rate had a very stable trend throughout the history, while the male suicide rate had dramatic changes. As mentioned in the other graph, there is a peak in 1995 for the suicide rate.
 
 ```{r,echo=FALSE,fig.align='center'}
 p <- maindata%>%
@@ -77,9 +77,9 @@ p <- maindata%>%
 p + transition_reveal(year)
 ```
 
-## Global Trend of Suicide Per 100k Populationn by age over time 
+## Global Trend of Suicide Per 100k Population by age over time 
 
-Suicide rates for the youngest age group nearly constant  and low over time. As the graph shown, elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. For age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years.
+Suicide rates for the youngest age group are nearly constant and low over time. As the graph shown, elder groups have had higher suicide rate since 1985, and surprisingly such trend has not changed once. Age groups 25-34, 35-54 and 55-74 had similar trends over those 30 years.
 
 
 ```{r,echo=FALSE,fig.align='center'}
@@ -101,10 +101,13 @@ p + transition_reveal(year)
 
 ## Suicide Rate by Country GDP
 
-GDP has been viewed as a good measure about the development of a country. However, graph below shows that there are no obvious trend between GDP and suicide rate. Although GDPs across the world have been shifted toward larger direction, such trend persists.
+GDP has been viewed as a good measure about the development of a country. However, the graph below shows that there is no obvious trend between GDP and suicide rate. Each color represents one country and from the animation of the plot, we can see that although GDP's across the world have been shifted toward the right which indicates an increasing trend, the estimated suicide in 100k people does not change that much.
+
 
 ```{r,echo=FALSE,fig.align='center'}
-p <- ggplot(maindata, aes(x = gdp_per_capita, y=suicide_per_100k, size = suicides_no, colour = country)) +
+suicide_country <- maindata %>% group_by(year,country,gdp_per_capita) %>% summarise(death=sum(suicides_no),pop = sum(population)) %>% mutate(suicide_100k_pop=((death)/(pop))*100000)
+
+p <- ggplot(suicide_country, aes(x = gdp_per_capita, y=suicide_100k_pop, colour = country)) +
   geom_point(show.legend = FALSE, alpha = 0.7) +
   scale_color_viridis_d() +
   scale_size(range = c(2, 12)) +
@@ -117,7 +120,7 @@ p + transition_time(as.integer(year))+ labs(title = "Year: {frame_time}") + shad
 
 ## Countries with most suicides across the years
 
-We are also interested about the ranking of amount of suicides across the time. Below, we show the changing of the ranking across the time. Since there are too many, we will choose the top 20 countries with most total amount of suicide from 1985 to 2015. Each of them has more than 10k death due to suicide across this 30-year period. Those countries are:
+We are also interested about the ranking of amount of suicides across the time. Below, we show the changes of the ranking across time. Since there are too many countries, we will choose the top 20 countries with largest total number of suicides from 1985 to 2015. Each of them has more than 10k death due to suicide across this 30-year period. Those countries are:
 
 ```{r,echo=FALSE,fig.align='center'}
 top_20 <- maindata %>% group_by(country) %>% summarise(count=sum(suicides_no)) %>% arrange(desc(count)) %>% head(n=16)

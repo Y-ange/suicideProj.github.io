@@ -35,7 +35,7 @@ maindata <- read_csv("maindata.csv")
 
 # Data
 
-The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at [here](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016). This dataset has a range from 1985 to 2016. However, since there are very few data in 2016, we will only keep the range from 1985 to 2015. 
+The main dataset for our project is a combined dataset from summary datasets made by United Nations Development Program, World Bank, Kaggle, and World Health Organization. It can be access at [here](https://www.kaggle.com/russellyates88/suicide-rates-overview-1985-to-2016). This dataset has a range from 1985 to 2016. However, since there is very few data in 2016, we will only keep the range from 1985 to 2015. 
 
 The raw dataset has a size of `r nrow(maindata)` observations and `r ncol(maindata)` features. Basic features we are interested in include:
 
@@ -46,7 +46,7 @@ The raw dataset has a size of `r nrow(maindata)` observations and `r ncol(mainda
 - **GDP per capita**
 - **Suicides_no**: Amount of suicides
 
-Besides those, we will derive our main interested variable, **Suicides Per 100K** as **Suicides_no** divided by **Population** and mutiplied by 100,000.
+Besides those, we will derive our main interested variable, **Suicides Per 100K** as **Suicides_no** divided by **Population** and multiplied by 100,000.
 
 
 # Exploratory data analysis
@@ -57,7 +57,7 @@ Besides those, we will derive our main interested variable, **Suicides Per 100K*
 country_count <- maindata %>% group_by(year) %>%  summarise(count = n_distinct(country))
 ```
 
-There are average `r mean(country_count$count)` countries in the dataset across each year. Graph below shows the distribution. Although there are less countries before 1995, the amount of countries for each year is stable arount 80.
+There are on average, `r mean(country_count$count)` countries in the dataset across each year. Graph below shows the distribution. Although there are less countries before 1995, the amount of countries for each year is stable around 80.
 
 ```{r,echo=FALSE,fig.align='center'}
 p <- ggplot(aes(x=as.factor(year),y=count),data=country_count)+
@@ -72,7 +72,7 @@ p
 
 ## Sex
 
-Graph below shows that sex for each year is also evenly distributed.
+The graph below shows that sex for each year is also evenly distributed.
 
 ```{r,echo=FALSE,fig.align='center'}
 sex_count <- maindata %>% group_by(year,sex) %>%  summarise(count = sum(population)/100000)
@@ -87,7 +87,7 @@ p
 
 ## Age group
 
-Although there are some variation between groups, theration between amounts of people in different age groups are consistent across years.
+Although there are some variations between groups, the ratios between amounts of people in different age groups are consistent across years.
 
 ```{r,echo=FALSE,fig.align='center'}
 age_count <- maindata %>% group_by(year,age) %>%  summarise(count = sum(population)/100000)
@@ -102,7 +102,7 @@ p
 
 # GDP per capita
 
-The distribution of GDP per capita is skewed to the right. As the year goes on, we can see that the distribution becomes more relatively flater.
+The distribution of GDP per capita is skewed to the right. As the year goes on, we can see that the distribution becomes flatter, relatively.
 
 ```{r,echo=FALSE,fig.align='center'}
 age_count <- maindata %>% group_by(year,age) %>%  summarise(count = sum(population)/100000)
@@ -115,7 +115,7 @@ p
 
 ## Suicides Per 100K
 
-As we mentioned above, we can derive our main interested variable, **Suicides Per 100K**, as **Suicides_no** divided by **Population** and mutiplied by 100,000. The trend is shown as below. As we can see, in recent years, the estimated suicides are decreasing. 
+As we mentioned above, we can derive our main interested variable, **Suicides Per 100K**, as **Suicides_no** divided by **Population** and multiplied by 100,000. The trend is shown as below. As we can see, in recent years, the estimated suicides rates are decreasing. 
 
 ```{r,echo=FALSE,fig.align='center'}
 p <- maindata %>%
@@ -137,9 +137,9 @@ p
 
 # Statistical Analysis
 
-Visualization will be used to examine the global general trend. We will detect the group difference by sex, age, and GDP per capita by doing regression analysis. The interaction terms between age groupand sex are also considered since it's possible that sex can have different suicide trend regarding different age groups. For example women in menopause might have higher suicide rate because of hormonal fluctuation.  Lastly, although not our primary interest, we will fit a regression model to see whether there is a sign of national-specific trend.
+Visualization will be used to examine the global general trend. We will detect the group difference by sex, age, and GDP per capita by doing regression analysis. The interaction terms between age group and sex are also considered since it's possible that sex can have different suicide trend regarding to different age groups. For example, women in menopause might have higher suicide rate because of the hormonal fluctuation.  Lastly, although it is out of our primary interest, we will fit a regression model to see whether there is a sign of national-specific trend.
 
-Following is the distribution of suicide_100k_pop, we can see that we need to transform it to satisfy the assumptions for linear model. 
+Following is the distribution of suicide_100k_pop, we can see that we need to transform it to satisfy the assumptions of the linear model. 
 
 ```{r,echo=FALSE,fig.align='center'}
 ggplot(aes(x=suicide_per_100k),data = maindata)+
@@ -151,7 +151,7 @@ ggplot(aes(x=suicide_per_100k),data = maindata)+
   xlab("Estimated Suicides Per 100k")
 ```
 
-We used log transformation and changed 0's to 0.01 for further calculations. Following graphs show that after transformation, the distribution has been much more normal than the previous one.
+We used log transformation and changed 0's to 0.01 for further calculations. Following graphs show that after the transformation, the distribution had been much more normal than the previous one.
 
 ```{r,echo=FALSE,warning=FALSE,fig.align='center'}
 #suicide = maindata 
@@ -179,23 +179,23 @@ kable(summary(model1)$coefficients)
 ```
 
 <br>
-Based on the summary, we can see that all our main effects and the interaction term are statistically significant. This indicates that there indeed are group difference by age, gender, and GDP per capita. As we purposed, sex can have different suicide trend regarding different age groups.
+Based on the summary, we can see that all our main effects and the interaction term are statistically significant. This indicates that there indeed are group differences by age, gender, and GDP per capita. As we proposed, sex can have different suicide trends regarding to different age groups.
 
-The F-statistics is `r summary(model1)$fstatistic[[1]]`. It's obvious that the model is statistically significant under any reasonable critical value. It also has a $R^2$ value of `r summary(model1)$r.squared[[1]]`, which indicateds our chose variables together are able to explain $51.09\%$ of observed variation.
+The F-statistics is `r summary(model1)$fstatistic[[1]]`. It's obvious that the model is statistically significant under any reasonable critical value. It also has a $R^2$ value of `r summary(model1)$r.squared[[1]]`, which indicated chosen variables together are able to explain $51.09\%$ of observed variation.
 
-To ensure accuracy, we also examined the assumptions of our model. The Residuals vs Fitted and Scale-Location value plot shows that the model is nearly homoscedastic. Normality assumption is examined by Q-Q plot, which is satisfied. Lastly, the Residuals vs Leverage plot indicates that although there are about 3 potential outliers in our dataset, none of them is close enough to the contour of cook's distance to be considered as influential observations.
+To ensure accuracy, we also examined the assumptions of our model. The Residuals vs Fitted and Scale-Location value plot show that the model is nearly homostaticity. Normality assumption is examined by the Q-Q plot, which is satisfied. Lastly, the Residuals vs Leverage plot indicates that although there are about 3 potential outliers in our dataset, none of them is close enough to the contour of cook's distance to be considered as influential observations.
 
 ```{r,echo=FALSE,,fig.align='center'}
 par(mfrow=c(2,2))
 plot(model1)
 ```
 
-In addition, we fitted added country and population into previous model. 
+In addition, we fitted another model by adding country and population into previous model. 
 
 
 $$ log(suicide \space per \space 100k) = \beta_0 + \beta_1year + \beta_2sex + \beta_3 age + \beta_4 age*sex + \beta_5 gdp \space per \space capita + \beta_6 Country$$
 
-The anova result indicates that at least one of country and population variable is statistically significant. This means that a more micro studies such as national level suicide trend analysis can be a topic for future topic.
+The anova result indicates that at least one of the countries and population variable is statistically significant. This means that a more micro studies such as national level suicide trend analysis can be a topic for future research questions.
 
 ```{r,echo=FALSE}
 model_try = lm(log_suicide~country+sex+age+gdp_per_capita+sex*age, data = maindata_log_y)
@@ -204,8 +204,9 @@ anova(model_try,model1)
 
 # Conclusion
 
-Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group andsex are statistically significant. This indicates that there indeed are group difference by age and gender. As we purposed, gender can have different impacts on amount of suicides regarding different age group. An interesting find is that although there are no obvious trend between amount of suicides and GDP per capita based on graph, the regression output shows that GDP per capita does have a statitically significant effect on amount of suicides.
+Our regression model indicates that all our main effects (i.e. age_group, sex, GDP per capita) and the interaction term between age_group and sex are statistically significant. This indicates that there indeed are group difference by age and gender. As we proposed, gender can have different impacts on amount of suicides regarding to different age groups. An interesting finding is that although there is no obvious trend between amount of suicides and GDP per capita based on the graph, the regression output shows that GDP per capita does have a statistically significant effect on amount of suicides.
 
 # Discussion
 
-A strength of this study is a longitudinal study with a time spin of 30 years, which gives us more chance to explore the justifications and trends behand the data. Meanwhile, there are many limitations future researchers need to be aware of. First of all, there are only few variables that may related with suicide rate. However, there are other factors or latent factors that may reflected by suicide rate such as alcohol use. Secondly, since we have done a global trend analysis, we need data from all over the world. However, this particular data set lacks the suicide information from Asia and  Africa. Lastly, the data is not individual-leveled which may intervene our analysis for prediction purpose.
+A strength of this study is that the study is a longitudinal study with a time spin of 30 years, which gives us more chance to explore the justifications and the trends behind the data. Meanwhile, there are many limitations that future researchers need to be aware of. First of all, there are only few variables that may be related to suicide rate. However, there are other factors or latent factors that may be reflected by suicide rate such as alcoholic use. Secondly, since we had done a global trend analysis, we need data from all over the world. However, this particular data set is lack of the suicide information from Asia(especially China and North Korea) and Africa. Lastly, the data is not individual-leveled which may intervene with our analysis for prediction purposes.
+
