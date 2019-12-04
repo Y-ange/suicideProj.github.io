@@ -6,10 +6,21 @@ output:
     toc: true
     toc_float: true
 ---
+
+
+<br>
 <center>
 ![](homepage_pic.jpg){width=500px}
 </center>
 
 # National Suicide Prevention Lifeline
 - 24 hours line: (800) 273-8255
-- [Office Websit](https://suicidepreventionlifeline.org/)
+- [Office Website](https://suicidepreventionlifeline.org/)
+
+<center>
+![](resourcepic1.jpg){width=500px}
+<center>
+
+# NYC Health Suicide Prevention
+- 1-888-NYC-WELL (1-888-692-9355)
+- [Office Website](https://www1.nyc.gov/site/doh/health/health-topics/suicide-prevention.page)

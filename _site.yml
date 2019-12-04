@@ -9,6 +9,8 @@ navbar:
       href: regression.html
     - text: "Resource"
       href: resource.html
+    - text: "Interactive Map"
+      href: https://yj2580.shinyapps.io/interactivemap/
 output:
   html_document:
     theme: journal

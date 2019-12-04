@@ -41,7 +41,7 @@ Our regression model indicates that all our main effects (i.e. age group, sex, G
 - Yeqing Ji | [Website](https://yj2580.github.io/)
 - Yingxi Ji | [Website](https://yj2579.github.io/)
 - Yiling Yang | [Website](https://yy3018.github.io/)
-- Wurongyan Zhang | [Website](https://wz2507.github.io/)
+- Wurongyan Zhang | [Website](https://zhangwurongyan.github.io/)
 
 
 
