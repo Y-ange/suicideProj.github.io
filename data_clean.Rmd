@@ -4,7 +4,7 @@ author: "Yiling Yang"
 date: "11/30/2019"
 output: pdf_document
 ---
-```{r}
+```{r,eval=FALSE}
 library(tidyverse)
 library(ggplot2)
 library(broom)
@@ -18,7 +18,7 @@ library(leaps)
 library(kableExtra)
 ```
 
-```{r}
+```{r,eval=FALSE}
 maindata <- read_csv("~/Desktop/master 2.csv") 
 
 maindata <-  maindata %>% 
