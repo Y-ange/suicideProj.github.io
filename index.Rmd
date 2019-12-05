@@ -35,7 +35,7 @@ Our regression model indicates that all our main effects (i.e. age group, sex, G
 # Report
 Our report can be found [here](report.html).
 
-<iframe width="560" height="315" src="https://www.youtube.com/watch?v=X_c4sHCHzJo&feature=youtu.be" frameborder="0" gesture="media" allow="encrypted-media"allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/watch?v=X_c4sHCHzJo&feature=youtu.be"></iframe>
 
 
 
