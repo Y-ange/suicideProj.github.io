@@ -1,6 +1,6 @@
 ---
 title: "report"
-author: "Wurongyan Zhang"
+author: 
 date: "12/4/2019"
 output: html_document
 ---
