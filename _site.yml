@@ -12,7 +12,7 @@ navbar:
     - text: "Interactive Map"
       href: https://yj2580.shinyapps.io/interactivemap/
     - icon: fa-github fa-lg
-      href: https://github.com/suicideProj/suicideProj.github.io.git
+      href: https://github.com/suicideProj/suicideProj.github.io.gitoppituyoiptuyyy4g
 output:
   html_document:
     theme: journal
