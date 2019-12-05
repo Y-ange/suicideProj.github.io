@@ -13,6 +13,12 @@ font-family: "Arial"
 ![](homepage.jpg){width=500px}
 </center>
 
+<br>
+
+# Screencast Introduction
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yutHrR_31g4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 # Introduction
 
 Death by suicide is an extremely complex issue that causes pain to hundreds of thousands of people every year around the world. Globally, close to 800,000 people die from suicide every year. This makes it one of the leading causes of death globally which is in the top 15 list. In this project, with a joint dataset from United Nations Development Program, World Bank, Kaggle, and World Health Organization, we examined current trend of Suicide Commitments. In particular, we are interested in:
@@ -34,9 +40,6 @@ Our regression model indicates that all our main effects (i.e. age group, sex, G
 
 # Report
 Our report can be found [here](report.html).
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/yutHrR_31g4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 
 
 # Website Navigation
